@@ -2,8 +2,9 @@
   <div class="city">
     <h2 class="city__name">{{ cityData.name }}</h2>
     <div class="city__statsContainer">
-      <p class="city__stats">{{ cityData.temp }}</p>
-      <p class="city__stats">{{ cityData.pressure }}</p>
+      <p class="city__stats">{{ cityData.temp }} &#8451;</p>
+      <p class="city__stats">{{ cityData.pressure }} hPa</p>
+      <p class="city__stats">Wilgotność: {{ cityData.humidity }}%</p>
     </div>
   </div>
 </template>
@@ -18,10 +19,15 @@ export default {
       API_KEY: '8bf066e8c144add877cf52ce8de3e9bf',
       cityName: '',
       cityData: {
+        id: '',
         name: '',
         temp: '',
         humidity: '',
         pressure: '',
+        temp_feelsLike: '',
+        wind: '',
+        temperatures: [],
+        humidities: [],
       },
     }
   },
@@ -32,23 +38,35 @@ export default {
     makeRequest() {
       const requestURL = `https://api.openweathermap.org/data/2.5/weather?id=${this.id}&appid=${this.API_KEY}&units=metric`;
       const cityInfo = this.cityData;
+      const id = this.id;
       axios.get(requestURL)
       .then(function (response) {
-        console.log(response)
         cityInfo.name = response.data.name;
         cityInfo.temp = response.data.main.temp;
         cityInfo.humidity = response.data.main.humidity;
         cityInfo.pressure = response.data.main.pressure;
+        cityInfo.temp_feelsLike = response.data.main.feels_like;
+        cityInfo.wind = response.data.wind.speed;
+        cityInfo.id = id;
+        cityInfo.temperatures.push(response.data.main.temp);
+        cityInfo.humidities.push(response.data.main.humidity);
+      })
+      .then(() => {
+        this.$emit('cityData', this.cityData);
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       })
 
-    }
+    },
+    refreshData() {
+      setInterval(this.makeRequest, 60000);
+    },
   },
   created() {
     this.makeRequest();
+    this.refreshData();
   },
 
 }
@@ -61,7 +79,7 @@ export default {
     background:#3f51b5;
     border-radius: 20px;
     margin: 0 1rem;
-    cursor: pointer;
+    pointer-events: none;
   }
 
   .city__name {

@@ -7,8 +7,8 @@
     </header>
     <div class="row">
       <ul class="cityCards row">
-        <li :key="ID" v-for="ID in observedCities" class="cityCardsItem">
-          <CityCard v-bind:id="ID" />
+        <li :key="ID" v-for="ID in observedCities" v-bind:elementID="ID" class="cityCardsItem" @click="displayAdditionalInfo">
+          <CityCard @cityData="addCityDataToArray" v-bind:id="ID" />
         </li>
       </ul>
 
@@ -18,12 +18,7 @@
       </div>
     </div>
 
-    <div class="row displayInfo">
-      <div class="col">
-          <h2>Miasto</h2>
-      </div>
-
-    </div>
+    <CityAdditionalInfo ref="updateChartData" v-if="isAdditionalInfoOpen" v-bind:cityData="singleCityData"/>
     <SearchModal v-if="isModalOpen" @toggleModal="toggleModal" @getCityID="addCityToObserve" />
   </div>
 </template>
@@ -32,17 +27,22 @@
 //import * as firebase from 'firebase';
 import CityCard from '../components/DashboardCityCard';
 import SearchModal from '../components/DashboardSearchModal';
+import CityAdditionalInfo from '../components/DashboardAdditionalInfo';
 
 export default {
   data() {
     return {
       isModalOpen: false,
+      isAdditionalInfoOpen: false,
       observedCities: [],
+      observedCitiesData: [],
+      singleCityData: {},
     }
   },
   components: {
     CityCard,
-    SearchModal
+    SearchModal,
+    CityAdditionalInfo
   },
   created: function() {
 
@@ -52,7 +52,25 @@ export default {
       this.isModalOpen = !this.isModalOpen;
     },
     addCityToObserve(ID) {
-      this.observedCities.push(ID);
+      if(this.observedCities.length <= 9) {
+        this.observedCities.push(ID);
+      } else {
+        alert('osiągnąłeś maksymalną liczbę obserowowanych miast');
+      }
+    },
+    addCityDataToArray(data) {
+      this.observedCitiesData.push(data);
+    },
+    displayAdditionalInfo(e) {
+      const clickedCardID = e.target.getAttribute('elementID');
+      this.observedCitiesData.filter((entry) => {
+        if(clickedCardID === entry.id) {
+          this.singleCityData = entry;
+        }
+      })
+
+      //this.$refs.updateChartData.updateChartData();
+      this.isAdditionalInfoOpen = true
     },
   }
 }
@@ -99,13 +117,7 @@ export default {
 
   .cityCardsItem {
     margin-bottom: 1rem;
-  }
-
-  .displayInfo {
-    margin-top: 5rem;
-    background: #3f51b5;
-
-    height: 100%;
+    cursor: pointer;
   }
 </style>
 
