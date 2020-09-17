@@ -16,7 +16,7 @@
       </ul>
 
       <div @click="toggleModal" class="cityCard cityCard--addNew">
-       <span>+</span>
+       <span class="addCardText">+</span>
        <p>dodaj miasto</p>
       </div>
     </div>
@@ -131,6 +131,10 @@ export default {
       font-size: 1rem;
 
     }
+  }
+
+  .addCardText {
+    margin-bottom: 1rem;
   }
 
   .cityCards {

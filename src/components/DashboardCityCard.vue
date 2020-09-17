@@ -108,6 +108,7 @@ export default {
   .city__stats {
     color: #b1d5ff;
     font-size: 1.2rem;
+    margin-bottom: 1rem;
   }
 
   .city__statsContainer {

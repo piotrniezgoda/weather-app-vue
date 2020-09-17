@@ -85,6 +85,7 @@ export default {
 
   .infoListItem {
     display: flex;
+    align-items: center;
     color: #a4d1ff;
     font-size: 1.2rem;
     &:not(:last-of-type) {
@@ -94,6 +95,7 @@ export default {
 
   .displayInfo__basic {
     padding-left: 1rem;
+    margin-bottom: 1rem;
   }
 
   .city__button {

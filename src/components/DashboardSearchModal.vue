@@ -9,7 +9,7 @@
       <div class="container">
         <ul id="resoultsList" class="searchResults">
           <li @click="addCity" class="searchResoult" v-bind:data-cityid="resoult.id" v-bind:key="resoult.id" v-for="resoult in searchResoults">
-            <h3 class="searchResult__name notClicable">{{ resoult.name }}</h3>
+            <h3 class="searchResult__name notClicable h3">{{ resoult.name }}</h3>
             <p class="searchResult__country notClicable">Kraj: {{ resoult.country }}</p>
             <p class="searchResult__coordinats notClicable">Szerokość geograficzna: {{ resoult.coord.lat }} | Długość geograficzna: {{ resoult.coord.lon }}</p>
           </li>
@@ -110,6 +110,7 @@ export default {
   .searchResults {
     max-width: 90%;
     margin: 0 auto;
+
   }
 
   .searchResoult {
@@ -130,7 +131,7 @@ export default {
   }
 
   .searchResult__country {
-    margin: 0;
+    margin: 0 0 0.5rem 0;
   }
 
   .closeModalBtn {

@@ -1,11 +1,11 @@
 <template>
   <form action="#" @submit.prevent="submit">
     <div class="form-group">
-      <label class="text-info" for="emailInput">Adres email</label>
+      <label class="text-info loginFormLabel" for="emailInput">Adres email</label>
       <input v-model="login" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">
     </div>
     <div class="form-group">
-      <label class="text-info" for="passwordInput">Hasło</label>
+      <label class="text-info loginFormLabel" for="passwordInput">Hasło</label>
       <input v-model="password" type="password" class="form-control" id="passwordInput">
     </div>
     <button type="submit" class="btn btn-primary">Zaloguj</button>
@@ -52,3 +52,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  .loginFormLabel {
+    margin-bottom: 0.5rem;
+  }
+</style>
