@@ -1,14 +1,14 @@
 <template>
   <form action="#" @submit.prevent="submit">
     <div class="form-group">
-      <label class="text-info" for="emailInput">Email address</label>
+      <label class="text-info" for="emailInput">Adres email</label>
       <input v-model="login" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">
     </div>
     <div class="form-group">
-      <label class="text-info" for="passwordInput">Password</label>
+      <label class="text-info" for="passwordInput">Hasło</label>
       <input v-model="password" type="password" class="form-control" id="passwordInput">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Zaloguj</button>
     <span v-if="loginError" class="alert alert-danger errorLogin">Błędne dane logowania!</span>
   </form>
 </template>
