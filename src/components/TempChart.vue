@@ -13,16 +13,17 @@ export default {
     }
   },
   props: {
-    temperatures: Array,
+    temperatures: Object,
   },
   methods: {
 
   },
 
    mounted: function (){
-    var data = {
+    const data = {
+      labels: this.temperatures.times,
   datasets: [{
-        data: this.temperatures,
+        data: this.temperatures.values,
         borderColor: "#3e95cd",
         fill: 'origin',
 
@@ -47,9 +48,18 @@ var option = {
   legend: {
     display: false,
     labels: {
-      fontColor: 'black'
+      fontColor: '#fff',
     }
-  }
+  },
+  line: {
+    backgroundColor: 'red',
+  },
+  title: {
+      display: true,
+      text: 'Wykres temperatury',
+      fontColor: '#fff',
+      fontSize: 16,
+    }
 };
     Chart.Line('chart', {
     options: option,
